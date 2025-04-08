@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { 
+import {
   Home,
   Image as ImageIcon,
   User,
@@ -14,7 +14,7 @@ import {
   BookMarked,
   History,
   HelpCircle,
-  MessageSquare
+  MessageSquare,
 } from "lucide-react";
 
 const routes = [
@@ -53,10 +53,20 @@ const routes = [
     icon: CreditCard,
     color: "text-blue-500",
     href: "/pricing",
-  }
+  },
 ];
 
 const bottomRoutes = [
+  {
+    label: "Login Component",
+    icon: User,
+    href: "/login",
+  },
+  {
+    label: "Register Component",
+    icon: User,
+    href: "/register",
+  },
   {
     label: "Help Center",
     icon: HelpCircle,
