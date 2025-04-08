@@ -6,11 +6,16 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
-import { Dialog, DialogContent, DialogTitle, DialogHeader } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogHeader,
+} from "@/components/ui/dialog";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
-import { 
+import {
   ImageIcon,
   Camera,
   Copy,
@@ -36,25 +41,26 @@ import {
   History,
   BookMarked,
   Download,
-  Share2
+  Share2,
 } from "lucide-react";
 
 const presetPrompts = [
   {
     title: "Portrait",
-    prompt: "A professional portrait photo with natural lighting and shallow depth of field",
-    icon: <Camera className="h-4 w-4" />
+    prompt:
+      "A professional portrait photo with natural lighting and shallow depth of field",
+    icon: <Camera className="h-4 w-4" />,
   },
   {
     title: "Landscape",
     prompt: "A breathtaking mountain landscape at sunset with dramatic clouds",
-    icon: <Sun className="h-4 w-4" />
+    icon: <Sun className="h-4 w-4" />,
   },
   {
     title: "Abstract",
     prompt: "Colorful abstract art with flowing shapes and vibrant gradients",
-    icon: <Palette className="h-4 w-4" />
-  }
+    icon: <Palette className="h-4 w-4" />,
+  },
 ];
 
 const quickActions = [
@@ -62,26 +68,26 @@ const quickActions = [
     title: "Enhance",
     description: "Improve image quality",
     icon: <Sparkles className="h-5 w-5" />,
-    color: "text-purple-500"
+    color: "text-purple-500",
   },
   {
     title: "Upscale",
     description: "Increase resolution",
     icon: <Zap className="h-5 w-5" />,
-    color: "text-blue-500"
+    color: "text-blue-500",
   },
   {
     title: "Remove BG",
     description: "Remove background",
     icon: <Eraser className="h-5 w-5" />,
-    color: "text-green-500"
+    color: "text-green-500",
   },
   {
     title: "Variations",
     description: "Generate variations",
     icon: <Layers className="h-5 w-5" />,
-    color: "text-orange-500"
-  }
+    color: "text-orange-500",
+  },
 ];
 
 export default function GeneratePage() {
@@ -99,25 +105,37 @@ export default function GeneratePage() {
   const [history, setHistory] = useState<string[]>([]);
   const [favorites, setFavorites] = useState<string[]>([]);
 
-  const styles = ["Natural", "Cinematic", "Anime", "Digital Art", "Oil Painting"];
+  const styles = [
+    "Natural",
+    "Cinematic",
+    "Anime",
+    "Digital Art",
+    "Oil Painting",
+  ];
   const lightingOptions = ["Natural", "Studio", "Dramatic", "Soft", "High Key"];
-  const cameraSettingsOptions = ["Auto", "Portrait", "Landscape", "Macro", "Night"];
+  const cameraSettingsOptions = [
+    "Auto",
+    "Portrait",
+    "Landscape",
+    "Macro",
+    "Night",
+  ];
 
   const handleGenerate = async () => {
     if (!prompt) return;
-    
+
     setLoading(true);
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
       const newImages = [
         "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800",
         "https://images.unsplash.com/photo-1579547621113-e4bb2a19bdd6?w=800",
         "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800",
-        "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800"
+        "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800",
       ];
-      
+
       setImages(newImages);
       setHistory([prompt, ...history]);
       toast.success("Images generated successfully!");
@@ -136,21 +154,27 @@ export default function GeneratePage() {
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setDragActive(false);
-    
+
     const files = Array.from(e.dataTransfer.files);
     if (files.length > 0) {
       toast.success(`Uploaded ${files.length} image(s)`);
     }
   };
 
-  const SettingSection = ({ title, icon: Icon, value, options, onChange }: any) => (
+  const SettingSection = ({
+    title,
+    icon: Icon,
+    value,
+    options,
+    onChange,
+  }: any) => (
     <div className="space-y-2">
       <div className="flex items-center gap-2">
         <Icon className="h-5 w-5 text-muted-foreground" />
         <h3 className="font-medium">{title}</h3>
       </div>
-      <Button 
-        variant="outline" 
+      <Button
+        variant="outline"
         className="w-full justify-between"
         onClick={() => {
           const currentIndex = options.indexOf(value);
@@ -168,20 +192,23 @@ export default function GeneratePage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/80">
       <div className="px-4 lg:px-6 py-6">
-        <div className="flex flex-col lg:flex-row gap-6">
-          {/* Main Content */}
-          <div className="flex-1 w-full space-y-6">
+        <div className="flex h-screen overflow-hidden">
+          {/* Main Content Scrollable Area */}
+          <div className="flex-1 w-full overflow-y-auto p-6 space-y-6">
             {/* Quick Actions */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               {quickActions.map((action) => (
-                <Card key={action.title} className="p-4 hover:bg-accent transition-colors cursor-pointer">
+                <Card
+                  key={action.title}
+                  className="p-4 hover:bg-accent transition-colors cursor-pointer"
+                >
                   <div className="flex items-center gap-3">
-                    <div className={`${action.color}`}>
-                      {action.icon}
-                    </div>
+                    <div className={`${action.color}`}>{action.icon}</div>
                     <div>
                       <h3 className="font-medium text-sm">{action.title}</h3>
-                      <p className="text-xs text-muted-foreground">{action.description}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {action.description}
+                      </p>
                     </div>
                   </div>
                 </Card>
@@ -192,7 +219,7 @@ export default function GeneratePage() {
             <Card className="relative overflow-hidden border-2 hover:border-primary/50 transition-colors">
               <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5" />
               <div className="relative p-4">
-                <Textarea 
+                <Textarea
                   placeholder="Describe the image you want to create..."
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
@@ -204,13 +231,17 @@ export default function GeneratePage() {
                       <Copy className="h-4 w-4 mr-2" />
                       Copy
                     </Button>
-                    <Button variant="ghost" size="sm" onClick={() => setPrompt("")}>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setPrompt("")}
+                    >
                       <Eraser className="h-4 w-4 mr-2" />
                       Clear
                     </Button>
                   </div>
-                  <Button 
-                    className="px-8" 
+                  <Button
+                    className="px-8"
                     disabled={!prompt || loading}
                     onClick={handleGenerate}
                   >
@@ -248,19 +279,24 @@ export default function GeneratePage() {
             {/* Generated Images Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {loading ? (
-                Array(4).fill(0).map((_, i) => (
-                  <Card key={i} className="aspect-square flex items-center justify-center bg-accent/50">
-                    <RefreshCw className="h-8 w-8 animate-spin text-muted-foreground" />
-                  </Card>
-                ))
+                Array(4)
+                  .fill(0)
+                  .map((_, i) => (
+                    <Card
+                      key={i}
+                      className="aspect-square flex items-center justify-center bg-accent/50"
+                    >
+                      <RefreshCw className="h-8 w-8 animate-spin text-muted-foreground" />
+                    </Card>
+                  ))
               ) : images.length > 0 ? (
                 images.map((src, i) => (
-                  <Card 
-                    key={i} 
+                  <Card
+                    key={i}
                     className="aspect-square overflow-hidden group relative cursor-pointer hover:ring-2 ring-primary/50 transition-all"
                     onClick={() => setSelectedImage(src)}
                   >
-                    <img 
+                    <img
                       src={src}
                       alt={`Generated ${i + 1}`}
                       className="w-full h-full object-cover"
@@ -284,9 +320,12 @@ export default function GeneratePage() {
                   <Card className="p-8 text-center">
                     <div className="flex flex-col items-center gap-2 text-muted-foreground">
                       <ImageIcon className="h-12 w-12 mb-2" />
-                      <h3 className="font-medium text-foreground">No Images Generated</h3>
+                      <h3 className="font-medium text-foreground">
+                        No Images Generated
+                      </h3>
                       <p className="max-w-sm">
-                        Enter a prompt above and click generate to create AI-powered images
+                        Enter a prompt above and click generate to create
+                        AI-powered images
                       </p>
                     </div>
                   </Card>
@@ -295,8 +334,8 @@ export default function GeneratePage() {
             </div>
           </div>
 
-          {/* Sidebar */}
-          <div className="w-full lg:w-[300px] space-y-6">
+          {/* Fixed Sidebar */}
+          <div className="hidden lg:block w-[300px] sticky top-0 h-screen overflow-y-auto p-6 space-y-6 bg-background">
             {/* Settings Panel */}
             <Card className="p-4 space-y-6">
               <div className="flex items-center justify-between">
@@ -336,7 +375,7 @@ export default function GeneratePage() {
                     <Cpu className="h-5 w-5 text-muted-foreground" />
                     <span className="font-medium">AI Enhancement</span>
                   </div>
-                  <Switch 
+                  <Switch
                     checked={enhancePrompt}
                     onCheckedChange={setEnhancePrompt}
                   />
@@ -351,18 +390,20 @@ export default function GeneratePage() {
                   <History className="h-4 w-4" />
                   Recent Prompts
                 </h2>
-                <Button variant="ghost" size="sm">Clear</Button>
+                <Button variant="ghost" size="sm">
+                  Clear
+                </Button>
               </div>
               <div className="space-y-2">
                 {history.map((item, i) => (
-                  <div 
+                  <div
                     key={i}
                     className="text-sm p-2 rounded-md hover:bg-accent cursor-pointer flex items-center justify-between group"
                     onClick={() => setPrompt(item)}
                   >
                     <span className="line-clamp-1">{item}</span>
-                    <Button 
-                      variant="ghost" 
+                    <Button
+                      variant="ghost"
                       size="icon"
                       className="opacity-0 group-hover:opacity-100"
                       onClick={(e) => {
@@ -386,7 +427,10 @@ export default function GeneratePage() {
       </div>
 
       {/* Image Details Modal */}
-      <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
+      <Dialog
+        open={!!selectedImage}
+        onOpenChange={() => setSelectedImage(null)}
+      >
         <DialogContent className="max-w-6xl p-0 gap-0">
           <DialogHeader className="p-6 pb-0">
             <DialogTitle>Image Details</DialogTitle>
@@ -394,9 +438,9 @@ export default function GeneratePage() {
           <div className="flex flex-col md:flex-row">
             {/* Image Section */}
             <div className="flex-1 relative">
-              <Button 
-                variant="ghost" 
-                size="icon" 
+              <Button
+                variant="ghost"
+                size="icon"
                 className="absolute right-2 top-2 z-10"
                 onClick={() => setSelectedImage(null)}
               >
@@ -404,8 +448,8 @@ export default function GeneratePage() {
               </Button>
               {selectedImage && (
                 <div className="relative aspect-square md:aspect-auto md:h-[600px]">
-                  <img 
-                    src={selectedImage} 
+                  <img
+                    src={selectedImage}
                     alt="Selected image"
                     className="w-full h-full object-cover"
                   />
@@ -420,7 +464,12 @@ export default function GeneratePage() {
                 <div className="bg-muted/50 rounded-lg p-3">
                   <p className="text-sm text-muted-foreground">{prompt}</p>
                 </div>
-                <Button variant="ghost" size="sm" className="mt-2" onClick={handleCopy}>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="mt-2"
+                  onClick={handleCopy}
+                >
                   <CopyIcon className="h-4 w-4 mr-2" />
                   Copy prompt
                 </Button>
